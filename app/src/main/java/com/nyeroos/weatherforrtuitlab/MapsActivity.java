@@ -3,7 +3,8 @@ package com.nyeroos.weatherforrtuitlab;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,6 +33,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Button cityButton = findViewById(R.id.city_button);
+        cityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                receiveWeather(((Button)v).getText().toString());
+            }
+        });
+    }
+
+    private void receiveWeather(final String city) {
+        mApi.getDataByCity(city, "ba3bef5e5bccf745a023bc18db977237", "metric")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Data>() {
+                    @Override
+                    public void accept(Data data) throws Exception {
+                        //Toast.makeText(MapsActivity.this, data.getName()+ " " +data.getMain().getTemp(), Toast.LENGTH_LONG).show();
+                        showWeatherMarker(data);
+                    }
+                });
+    }
+
+    private void showWeatherMarker(Data data) {
+        LatLng latLng = new LatLng(data.getCoord().getLat(), data.getCoord().getLon());
+        mMap.addMarker(new MarkerOptions().position(latLng).title(data.getName() + ": " + data.getMain().getTemp())).showInfoWindow();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
     }
 
 
@@ -49,19 +77,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //LatLng sydney = new LatLng(-34, 151);
 
-        mApi.getDataByCity("Moscow", "ba3bef5e5bccf745a023bc18db977237", "metric")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Data>() {
-                    @Override
-                    public void accept(Data data) throws Exception {
-                        Toast.makeText(MapsActivity.this, data.getName()+ " " +data.getMain().getTemp(), Toast.LENGTH_LONG).show();
-                    }
-                });
+
+
                 /*.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Data>() {
