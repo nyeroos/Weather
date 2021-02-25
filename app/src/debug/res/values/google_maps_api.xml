@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=AB:77:0D:6D:ED:7B:C6:F6:8D:43:C5:B9:E6:65:23:F5:C6:FC:95:1F%3Bcom.nyeroos.weatherforrtuitlab
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.nyeroos.weatherforrtuitlab
+
+    SHA-1 certificate fingerprint:
+    AB:77:0D:6D:ED:7B:C6:F6:8D:43:C5:B9:E6:65:23:F5:C6:FC:95:1F
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBsQRt1DZUKPJdZIMy7UGqHBeQP520d-bQ</string>
+</resources>
