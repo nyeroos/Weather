@@ -18,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
 
@@ -34,13 +34,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Button cityButton = findViewById(R.id.city_button);
-        cityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                receiveWeather(((Button)v).getText().toString());
-            }
-        });
+        Button cityButton = findViewById(R.id.Moscow_button);
+        cityButton.setOnClickListener(this);
+
+        findViewById(R.id.Krasnodar_button).setOnClickListener(this);
+
     }
 
     private void receiveWeather(final String city) {
@@ -78,16 +76,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
+    }
 
-
-
-                /*.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Data>() {
-                    @Override
-                    public void accept(final Data data) throws Exception {
-                        Toast.makeText(MapsActivity.this, data.getName()+ " " + data.getMain().getTemp(), Toast.LENGTH_LONG).show();
-                    }
-                });*/
+    @Override
+    public void onClick(View v) {
+        receiveWeather(((Button)v).getText().toString());
     }
 }

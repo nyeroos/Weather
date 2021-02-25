@@ -2,4 +2,5 @@
     <string name="app_name">Weather for RTUITLab</string>
     <string name="title_activity_maps">Map</string>
     <string name="Moscow">Moscow</string>
+    <string name="Krasnodar">Krasnodar</string>
 </resources>
